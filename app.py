@@ -43,15 +43,16 @@ def generate_content(state: State):
 
 def feedback_loop(state: State):
     """Handles feedback from the user to change title, content, or both."""
-    # Check if user wants to change title or content
+    # Get the latest user feedback
     user_feedback = state["messages"][-1].content.lower()
 
+    # Check for changes requested by user
     if "change title" in user_feedback:
         return "title_generator"
     elif "change content" in user_feedback:
         return "content_generator"
     elif "change both" in user_feedback:
-        return "title_generator"  # Re-generate both, starting with the title
+        return "title_generator"  # Regenerate both, starting with the title
     else:
         return END  # No changes requested, end the flow
 
@@ -112,6 +113,7 @@ if user_idea:
         updated_title = result["messages"][-1].content
         st.subheader("Updated Blog Title:")
         st.write(updated_title)
+        
         # Optionally, you can regenerate content as well based on feedback
         if "content" in user_feedback.lower():
             updated_content = result["messages"][-1].content
