@@ -22,16 +22,12 @@ class State(TypedDict):
 model = ChatGroq(model="llama3-70b-8192", temperature=0.7)
 
 def generate_title(state: State):
-    """Generates a short, catchy blog title based on user input."""
+    """Generates a blog title based on user input."""
     user_idea = state["messages"][-1].content  # Extract user input
-    prompt = f"Generate a short, catchy, and concise blog title for this idea: {user_idea}"
-
+    prompt = f"Generate an engaging blog title for this idea: {user_idea}"
+    
     title_response = model.invoke([HumanMessage(content=prompt)])
     title = title_response.content.strip()
-    
-    # Limit the length of the title to ensure it's concise
-    if len(title) > 60:
-        title = title[:60] + "..."  # Truncate long titles for better readability
     
     return {"title": title, "messages": state["messages"] + [AIMessage(content=title)]}
 
