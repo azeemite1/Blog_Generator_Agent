@@ -87,7 +87,7 @@ user_idea = st.text_input("Enter your blog idea:", "")
 if user_idea:
     # Generate blog title
     st.write("Generating blog title...")
-    result = agent.invoke({"messages": [HumanMessage(content=user_idea)]})
+    result = agent.invoke({"messages": [{"role": "user", "content": user_idea}]})
     
     # Display the generated title and content
     blog_title = result["messages"][-1].content
@@ -96,7 +96,7 @@ if user_idea:
 
     # Generate blog content based on title
     st.write("Generating blog content...")
-    result = agent.invoke({"messages": [{"content": blog_title}]})
+    result = agent.invoke({"messages": [{"role": "user", "content": blog_title}]})
 
     blog_content = result["messages"][-1].content
     st.subheader("Generated Blog Content:")
@@ -106,7 +106,7 @@ if user_idea:
     user_feedback = st.text_input("Do you want to change the title, content, or both? (e.g., 'change title')", "")
 
     if user_feedback:
-        result = agent.invoke({"messages": [{"content": user_feedback}]})
+        result = agent.invoke({"messages": [{"role": "user", "content": user_feedback}]})
         st.write("Updated blog:")
         updated_title = result["messages"][-1].content
         st.subheader("Updated Blog Title:")
@@ -121,4 +121,3 @@ else:
 
 # Footer section with developer name
 st.markdown("Developed by [Azeem Adeyemi](https://www.linkedin.com/in/azeem-adeyemi-b99291b3/)")
-
