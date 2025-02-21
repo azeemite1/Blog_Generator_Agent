@@ -89,15 +89,16 @@ if user_idea:
     st.write("Generating blog title...")
     result = agent.invoke({"messages": [{"role": "user", "content": user_idea}]})
     
-    # Display the generated title and content
+    # Display the generated title
     blog_title = result["messages"][-1].content
     st.subheader("Generated Blog Title:")
     st.write(blog_title)
 
-    # Generate blog content based on title
+    # Generate blog content based on title (after title is generated)
     st.write("Generating blog content...")
     result = agent.invoke({"messages": [{"role": "user", "content": blog_title}]})
 
+    # Display the generated blog content
     blog_content = result["messages"][-1].content
     st.subheader("Generated Blog Content:")
     st.write(blog_content)
